@@ -127,7 +127,7 @@ for document in edit_list:
 	#print "----------------------------"
 	#print ""
 	i = i + 1
-
+#shfgjslfg
 items_updated_nm = product.find({ "$and":[ {"store_name":"neimanmarcus"}, {"sku_id": {"$exists": True} }]}).count()
 
 print "total NM items updated so far: ", items_updated_nm
