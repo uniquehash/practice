@@ -3,14 +3,11 @@
 from lxml import html
 import requests
 
-page = requests.get('http://econpy.pythonanywhere.com/ex/001.html')
+page = requests.get('http://stackoverflow.com/questions?pagesize=50&sort=newest')
 
 tree = html.fromstring(page.content)
 
-#This will create a list of buyers:
-buyers = tree.xpath('//div[@title="buyer-name"]/text()')
-#This will create a list of prices
-prices = tree.xpath('//span[@class="item-price"]/text()')
+questions = tree.xpath('//div[@id="questions"]/*/div[2]/h3/a')
 
-print 'buyers: ', buyers
-print 'prices: ', prices
+print len(questions)
+print questions[0].text
