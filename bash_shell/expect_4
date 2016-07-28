@@ -1,0 +1,7 @@
+#!/usr/bin/expect
+
+spawn "./keyboard"
+
+expect "yo" { send "no shit" } 
+
+interact

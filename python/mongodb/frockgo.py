@@ -35,8 +35,12 @@ def ftr_url (substring):
 #function to print all the items of an iterable
 def print_items(items):
 	for document in items:
-		print document
-		print ("----------------")
+		print "name: ", document['name']
+		print "brand: ", document['brand']
+		print "url: ", document['url']
+		print "gender: ", document['gender']
+		print "---------------------"	
+
 		
 
 #find a sku by url targeted towards bloomingdales
@@ -98,10 +102,142 @@ def fetch_sku_nm(document):
 #items_investigated = product.find({"$or":[{"store_name":"barneys"}, {"store_name":"bloomingdales"},{"store_name":"bergdorfgoodman"}]}).count()
 #other_items = product.find({"store_name": { "$nin": ["bloomingdales","barneys","bergdorfgoodman"]}}).count()
 
-print "update start: ", datetime.now().time()
+start = datetime.now()
+num_request = 80
+
+print "update start: ", start
+print "frock"
+
+female = 0
+brands = 0
+number = 0 
+indexRange = 0
+urlRange = [""]
+brands_marked_clear = 0
+
+items = product.find({ "$and":[ {"store_name":"neimanmarcus"}, {"sku_id": {"$ne": "DeadLink"}}, {"brand":""}]}).limit(num_request)
+brands_left = product.find({ "$and":[ {"store_name":"neimanmarcus"}, {"sku_id": {"$ne": "DeadLink"}}, {"brand":""}]}).count()
+gender_left = product.find({ "$and":[ {"store_name":"neimanmarcus"}, {"sku_id": {"$ne": "DeadLink"}}, {"gender":""}]}).count()
+brands_0 = product.find({ "$and":[ {"store_name":"neimanmarcus"}, {"sku_id": {"$ne": "DeadLink"}}, {"brand":0}]}).count()
+gender_female = product.find({ "$and":[ {"store_name":"neimanmarcus"}, {"sku_id": {"$ne": "DeadLink"}}, {"gender":"female"}]}).count()
 
 
-items = product.find({ "$and":[ {"store_name":"neimanmarcus"}, {"sku_id": {"$exists": False} }]}).limit(100)
+
+print items[0]['name']
+"""
+for z in items:
+	print "number: ", number
+	print z['url']
+	r = requests.get(z['url'])
+	data = r.text
+	soup = BeautifulSoup(data, 'lxml')
+
+	p = str(soup.findAll("h6", {"class": "product-name"})[0])
+	if "id=" in p:
+		brands = brands +1
+		a = p.split('id=')[1]
+		b = a.split('>')[1]
+		c = b.split('<')[0]
+		print "brand: ", c
+	number = number +1
+
+	#print p
+	print "------------------------"
+
+print "num brands found: ", brands
+"""
+
+for z in items:
+	number = number +1
+	#print z['url']
+	r = requests.get(z['url'])
+	data = r.text
+	soup = BeautifulSoup(data, 'lxml')
+	"""
+	try :
+		brand = str(soup.findAll("div", {"class":"aboutDesignerCopy"})[0])
+		y = brand.split(">")
+		a = y[2].split(":")
+		c = a[0].split("About ")[1]
+		c = c.lower()
+		#product.update_one({"_id":z['_id']}, {"$set":{"brand":c}})
+		brands= brands +1
+	except IndexError:
+		#c = 'no brand'
+	"""
+	try:
+		p = str(soup.findAll("h6", {"class": "product-name"})[0])
+		if "id=" in p:
+			brands = brands +1
+			a = p.split('id=')[1]
+			b = a.split('>')[1]
+			c = b.split('<')[0]
+			product.update_one({"_id":z['_id']}, {"$set":{"brand":c}})
+		else:
+			brands_marked_clear = brands_marked_clear +1
+			product.update_one({"_id":z['_id']}, {"$set":{"brand":0 }})
+	except IndexError:
+		print "out of range", z['url']
+		urlRange.append(z['url'])
+		indexRange = indexRange +1
+		product.update_one({"_id":z['_id']}, {"$set":{"sku_id":"DeadLink"}})
+
+
+	try :
+		gender = str(soup.findAll("div", {"class":"productCutline"})[0])
+		if "dress size US" in gender:
+		#	print "female gender:", "dress size" in gender
+			product.update_one({"_id":z['_id']}, {"$set":{"gender":"female"}})
+			female = female +1
+		else:
+			pass
+		#	print "unsure if female"
+	except IndexError:
+		#print "can't find productCutline"
+		pass
+	
+finish = datetime.now()
+delta = (finish - start).seconds/60.00
+
+print ""
+print "------------- data gathered -------------"
+print "num brands found: ", brands
+print "num female found: ", female
+print "num of clear brands", brands_marked_clear
+print "num out of range index", indexRange
+
+print ""
+print "------------- meta data gathered -------------"
+print "number of request: ", num_request 
+print "update finished: ", finish
+print "time differential: ", delta, "minutes"
+print "rough requtest rate: ", num_request/delta, "per minute"
+
+print ""
+print "------------- mongo data left -------------"
+print "brands untouched: ", brands_left
+print "brands zero'd: ", brands_0
+print "gender untouched: ", gender_left
+print "gender female: ", gender_female
+
+print ""
+print "------------- dead links -------------"
+print "list of url out of range", urlRange
+print ""
+print "---------------------------"
+print ""
+
+
+
+
+
+
+#not relevant
+
+#print gender
+#print "dress size" in gender
+
+#print x
 
 #items = product.find({"url":"http://www.neimanmarcus.com/zh-cn/Donna-Karan-Organza-Elbow-Sleeve-Top-Street-Art-Printed-Pleated-Skirt-Hand-Painted-Leather-Belt/prod176660020/p.prod"})
 
@@ -115,11 +251,11 @@ items = product.find({ "$and":[ {"store_name":"neimanmarcus"}, {"sku_id": {"$exi
 
 #print "items being assesed: ", items
 #print "diff: ", other_items - items
-edit_list = map(fetch_sku_nm, items)
+#edit_list = map(fetch_sku_nm, items)
 #print_items(edit_list)
 
-i = 1
-
+#i = 1
+"""
 for document in edit_list:	
 	#print "entry number: "+str(i)
 	product.update_one({"_id":document[0]}, {"$set":{"sku_id":document[2]}})
@@ -132,7 +268,7 @@ items_updated_nm = product.find({ "$and":[ {"store_name":"neimanmarcus"}, {"sku_
 
 print "total NM items updated so far: ", items_updated_nm
 print "update finished: ", datetime.now().time()
-
+"""
 
 
 

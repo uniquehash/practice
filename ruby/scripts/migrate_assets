@@ -1,0 +1,27 @@
+#!/usr/bin/ruby
+
+require 'find' 
+require 'fileutils'
+
+
+current_dir = Dir.pwd
+
+puts current_dir 
+
+FileUtils.cd( '..')
+
+new_dir = Dir.pwd
+puts new_dir
+
+file_original_path  	= ''
+file_preview_path 	= ''
+file_thumb_path		= ''
+
+new_orginal_path 	= ''
+new_preview_path 	= ''
+new_thumb_path 		= ''
+
+
+
+
+

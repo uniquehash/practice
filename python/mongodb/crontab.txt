@@ -1,1 +1,7 @@
-* * * * * /usr/local/bin/python /Users/oliverbelange/Desktop/practice/python/mongodb/frockgo.py >> ~/Desktop/log.txt
+* * * * * /usr/local/bin/python /Users/oliverbelanger/Desktop/practice/python/mongodb/frockgo.py >> ~/Desktop/log.txt
+
+* * * * * /usr/local/bin/python /Users/oliverbelanger/Desktop/practice/python/mongodb/frockgo2.py >> ~/Desktop/log.txt
+
+* * * * * /usr/local/bin/python /Users/oliverbelanger/Desktop/practice/python/mongodb/frockgo3.py >> ~/Desktop/log.txt
+
+* * * * * /usr/local/bin/python /Users/oliverbelanger/Desktop/practice/python/mongodb/frockgo4.py >> ~/Desktop/log.txt

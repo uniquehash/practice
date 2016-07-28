@@ -1,0 +1,5 @@
+#!/usr/bin/expect
+#simple expect script 
+expect "hello"
+
+send "world"
