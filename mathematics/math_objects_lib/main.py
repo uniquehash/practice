@@ -36,7 +36,9 @@ print matrix
 # print ""
 # matrix.push_down_row(matrix.index_to_push())
 # matrix.proper_order()
-matrix.canonical_form()
+# matrix.canonical_form()
+print "0-4, 2-4"
+matrix.subset(3,7,2,7)
 print matrix
 # print matrix.verify_form()
 # matrix.verify_form()

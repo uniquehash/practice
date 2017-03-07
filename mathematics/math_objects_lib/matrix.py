@@ -44,10 +44,54 @@ class Matrix(object):
 		return s
 
 
+
+	def subset(self, rs, rf, cs, cf):
+		col = range(cs, cf)
+		row = range(rs, rf)
+
+		sub = []
+		tmp = []
+		for j, e in enumerate(self.x):
+			if j in row:
+				tmp = []
+				for i, x in enumerate(e):
+					if i in col:
+						tmp.append(x)
+				sub.append(tmp)
+
+		print self.to_str(sub)
+		return 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	def canonical_form(self):
 		self.proper_order()
 		self.proper_form()
-
 
 	def proper_form(self):
 		for i, e in enumerate(self.x):
@@ -98,7 +142,6 @@ class Matrix(object):
 			return True
 		else:
 			return False
-
 
 	def terminals_len(self):
 		stable = 0
