@@ -6,8 +6,6 @@ from fractions import Fraction as ff
 
 
 
-							   # a  b  c  d  e  f
-							   # 0  1  2  3  4  5
 
 
 n4 = 4.0 / 9
@@ -15,7 +13,9 @@ n3 = 3.0 / 9
 n2 = 2.0 / 9
 t1 = 1.0 / 2
 
-
+							   #  a   b   c   d   e   f
+							   #  0   1   2   3   4   5
+							   # s0  s1  s2  s3  s4  s5
 transition_matrix = np.matrix([
 								[ 0, t1,  0,  0,  0, t1], 
 								[n4,  0,  0, n3, n2,  0],
