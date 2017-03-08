@@ -41,7 +41,8 @@ Q = np.matrix(canonical_form[:2, :2])
 print "\nQ:"
 print Q
 
-I = np.identity(2	)
+
+I = np.identity(2)
 print "\nI:"
 print I
 
