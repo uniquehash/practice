@@ -218,7 +218,7 @@ class Matrix(object):
 				stable += 1
 		return stable
 
-
+	
 
 
 
