@@ -34,18 +34,4 @@ print "logging in..."
 
 server.login(USERNAME, PASSWORD)
 
-print "retreiving info..."
-
-select_info = server.select_folder('INBOX')
-print('%d messages in INBOX' % select_info['EXISTS'])
-
-messages = server.search(['NOT', 'DELETED'])
-print("%d messages that aren't deleted" % len(messages))
-
-print()
-print("Messages:")
-response = server.fetch(messages, ['FLAGS', 'RFC822.SIZE'])
-for msgid, data in response.iteritems():
-    print('   ID %d: %d bytes, flags=%s' % (msgid,
-                                            data[b'RFC822.SIZE'],
-                                            data[b'FLAGS']))
+print "logged in!"
