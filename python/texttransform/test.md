@@ -1,2 +1,2 @@
 this is a test
-this is a **bold** test
+it tests **all** of the things
